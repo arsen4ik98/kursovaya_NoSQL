@@ -8,22 +8,8 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <body>
-    <h2>Список пользователей</h2>
-    <form name="userForm">
-        <input type="hidden" name="id" value="0" />
-        <div class="form-group">
-            <label for="name">efkvjen:</label>
-            <input class="form-control" name="name" />
-        </div>
-        <div class="form-group">
-            <label for="age">Возраст:</label>
-            <input class="form-control" name="age" />
-        </div>
-        <div class="panel-body">
-            <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
-            <a id="reset" class="btn btn-sm btn-primary">Сбросить</a>
-        </div>
-    </form>
+    <h2>Маршрутки</h2>
+    
     <table class="table table-condensed table-striped table-bordered">
         <thead><tr><th>Id</th><th>Имя</th><th>возраст</th><th></th></tr></thead>
         <tbody>
@@ -34,31 +20,97 @@
         // Получение всех пользователей
         function GetUsers() {
             $.ajax({
-                url: "/Routen_avto",
+                url: "/Routen_Avto",
                 type: "GET",
                 contentType: "application/json",
-                success: function (Routen_avto) {
+                success: function (Routen_Avto) {
                     var rows = "";
                     
-                    $.each(Routen_avto, function (index, user) {
+                    $.each(Routen_Avto, function (index, user) {
                         // добавляем полученные элементы в таблицу
                         rows += row(user);
                         
                     })
                     $("table tbody").append(rows);
                  }
+
+                 
             });
+            
             var row = function (user) {
             return "<tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
-                   "<td>" + user.title+ "</td> <td>" + user.f + "</td>" +
+                "<td>" + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td>" + 
+                   "<td><a class='editLink' data-id='" + user._id + "'>Изменить</a> | " +
+                    "<a class='removeLink' data-id='" + user._id + "'>Удалить</a></td></tr>"
+        }
+        
+        }
+        GetUsers();
+    </script><h2>Троллейбусы</h2><table class="table table-condensed table-striped table-bordered">
+        <thead><tr><th>Id</th><th>Имя</th><th>возраст</th><th></th></tr></thead>
+        <tbody>
+        </tbody>
+    </table><script>
+        function GetUsers2() {
+            $.ajax({
+                url: "/Routen_Trol",
+                type: "GET",
+                contentType: "application/json",
+                success: function (Routen_Trol) {
+                    var rows = "";
+                    
+                    $.each(Routen_Trol, function (index, user) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(user);
+                        
+                    })
+                    $("table tbody").append(rows);
+                 }
+                 
+            });
+            
+            var row = function (user) {
+            return "><tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
+                   "<td>" + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td>" + 
                    "<td><a class='editLink' data-id='" + user._id + "'>Изменить</a> | " +
                     "<a class='removeLink' data-id='" + user._id + "'>Удалить</a></td></tr>";
         }
         }
-       
-       
-        // загрузка пользователей
-        GetUsers();
-    </script>
+        GetUsers2();
+        </script><h2>Трамвай</h2><table class="table table-condensed table-striped table-bordered">
+        <thead><tr><th>Id</th><th>Имя</th><th>возраст</th><th></th></tr></thead>
+        <tbody>
+        </tbody>
+    </table><script>
+        function GetUsers3() {
+            $.ajax({
+                url: "/Routen_Tram",
+                type: "GET",
+                contentType: "application/json",
+                success: function (Routen_Tram) {
+                    var rows = "";
+                    
+                    $.each(Routen_Tram, function (index, user) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(user);
+                        
+                    })
+                    $("table tbody").append(rows);
+                 }
+                 
+            });
+            
+            var row = function (user) {
+            return "<tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
+                "<td>" + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td>" + 
+                   "<td><a class='editLink' data-id='" + user._id + "'>Изменить</a> | " +
+                    "<a class='removeLink' data-id='" + user._id + "'>Удалить</a></td></tr>";
+        }
+        }
+        GetUsers3();
+       </script>
+        
+        
+    
 </body>
 </html>
