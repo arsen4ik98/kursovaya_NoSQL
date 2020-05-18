@@ -12,7 +12,7 @@
     <form name="userForm">
         <input type="hidden" name="id" value="0" />
         <div class="form-group">
-            <label for="name">Имя:</label>
+            <label for="name">efkvjen:</label>
             <input class="form-control" name="name" />
         </div>
         <div class="form-group">
@@ -34,18 +34,26 @@
         // Получение всех пользователей
         function GetUsers() {
             $.ajax({
-                url: "/test",
+                url: "/Routen_avto",
                 type: "GET",
                 contentType: "application/json",
-                success: function (test) {
+                success: function (Routen_avto) {
                     var rows = "";
-                    $.each(test, function (index, Routen_avto) {
+                    
+                    $.each(Routen_avto, function (index, user) {
                         // добавляем полученные элементы в таблицу
-                        rows += row(Routen_avto);
+                        rows += row(user);
+                        
                     })
                     $("table tbody").append(rows);
                  }
             });
+            var row = function (user) {
+            return "<tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
+                   "<td>" + user.title+ "</td> <td>" + user.f + "</td>" +
+                   "<td><a class='editLink' data-id='" + user._id + "'>Изменить</a> | " +
+                    "<a class='removeLink' data-id='" + user._id + "'>Удалить</a></td></tr>";
+        }
         }
        
        
