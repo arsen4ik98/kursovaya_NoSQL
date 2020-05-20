@@ -1,9 +1,12 @@
 const express = require("express");
 const MongoClient = require("mongodb").MongoClient;
 const objectId = require("mongodb").ObjectID;
+const neo4j = require('neo4j-driver');
 
 const app = express();
 const jsonParser = express.json();
+const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', '123456'));
+const session = driver.session();
    
 const url = "mongodb://localhost:27017/";
 const mongoClient = new MongoClient(url, { useNewUrlParser: true });
@@ -45,6 +48,20 @@ app.get("/Routen_Avto", function(req, res){
     });
      
 });
+app.get('/123',function(req,res){
+    session
+        .run('match (e1:Route) return e1')
+        .then(function(result){
+            result.records.forEach(function(record) {
+                console.log(record._fields[0].properties);
+            });
+        })
+        .catch(function(err){
+console.log(err);
+        });
+res.send('It Works');
+});
+
 app.get("/Routen_Tram", function(req, res){
         
     const collection = req.app.locals.collection3;

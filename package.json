@@ -5,6 +5,7 @@
     "express": "^4.16.4",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.14",
+    "neo4j-driver": "^4.0.2",
     "nodemon": "^2.0.4"
   }
 }
