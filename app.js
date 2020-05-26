@@ -3,8 +3,22 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
+const redis = require("redis");
+const client = redis.createClient();
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','ejs');
+
+client.set("string key", "string val", redis.print)
+client.hset("hash key", "hashtest 1", "some value", redis.print)
+client.hset(["hash key", "hashtest 2", "some other value"],redis.print)
+client.hkeys("hash key", function (err, replies) {
+console.log(replies.length + " replies:");
+replies.forEach(function (reply, i) {
+console.log(" " + i + ": " + reply)
+})
+client.quit()
+})
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -60,7 +74,7 @@ app.get("/Routen_Avto", function(req, res){
     });
      
 });
-app.get('/123',function(req,res){
+app.get('/views/about.ejs',function(req,res){
     session
         .run('match (e1:Route) return e1')
         .then(function(result){
@@ -77,7 +91,6 @@ app.get('/123',function(req,res){
                     tram: tramArr
                 
             });
-            console.log(tramArr);
         })
         .catch(function(err){
 console.log(err);

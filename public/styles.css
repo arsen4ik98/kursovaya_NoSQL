@@ -1,2 +1,38 @@
 	
 body{ font-family: Verdana; color:rgb(48, 48, 92);}
+
+*{margin:0;}
+#page {
+    width: 100%;
+}
+#header {
+    background-color:#b5dcb3;
+}
+#sidebar>ul {
+    list-style: none;
+    padding:5px;
+}
+#sidebar {
+    background-color:#dddddd;
+    height:200px;
+    width:29%;
+    float:left;
+    padding:5px;        
+}
+#content {
+    background-color:#eeeeee;
+  
+    width:69.95%;
+    float:left;
+    padding:5px;    
+}
+#footer {
+    background-color:#b5dcb3;
+    clear:both;
+    text-align:center;
+    padding:5px;    
+}
+#tr, th,td {
+   
+    border: 1px solid black;
+}

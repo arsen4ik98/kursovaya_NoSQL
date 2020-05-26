@@ -4,14 +4,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Список пользователей</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="styles.css">    
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
-<body>
-    <h2>Маршрутки</h2>
+
+<div id="page">
+    <div id="header">
+    <h1>Шапка сайта</h1>
+    </div>
     
+    <div id="sidebar">
+    <b>Главное меню</b>
+    <ul>
+      <li>HTML Элементы</li>
+      <li>HTML Атрибуты</li>
+      <li>HTML Таблицы</li>
+      <li><a href="/views/about.ejs">Как сделать такое же фото?</a></li>
+      <li>...</li>
+    </ul>
+    </div>
+    
+    <div id="content">
+    <p>
     <table class="table table-condensed table-striped table-bordered">
-        <thead><tr><th>Id</th><th>Имя</th><th>возраст</th><th></th></tr></thead>
+        <thead><tr><th>Id</th><th>Имя</th><th>возраст</th></tr></thead>
     
   
     <script>
@@ -36,8 +52,7 @@
             });
             
             var row = function (user) {
-            return "<tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
-                "<td>" + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td></tr>"
+            return "<tr data-rowid='"  + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td></tr>"
         }
         
         }
@@ -45,76 +60,14 @@
         
     </script>
     </table>
-    <h2>Трамвай</h2>
-    <table class="table table-condensed table-striped table-bordered">
-        <thead><tr><th>Id</th><th>Имя</th><th>возраст</th><th></th></tr></thead>
-    </table>
-    <script>
-        // Получение всех пользователей
-        function GetUsers1() {
-            $.ajax({
-                url: "/Routen_Tram",
-                type: "GET",
-                contentType: "application/json",
-                success: function (Routen_Tram) {
-                    var rows = "";
-                    
-                    $.each(Routen_Tram, function (index, user) {
-                        // добавляем полученные элементы в таблицу
-                        rows += row(user);
-                        
-                    })
-                    $("table").append(rows);
-                 }
-
-                 
-            });
-            
-            var row = function (user) {
-            return "<tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
-                "<td>" + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td></tr>"
-                   
-        }
-        
-        }
-        GetUsers3();
-    </script>
-     <h2>Троллейбусы</h2>
-     <table class="table table-condensed table-striped table-bordered">
-         <thead><tr><th>Id</th><th>Имя</th><th>возраст</th><th></th></tr></thead>
-     </table>
-     <script>
-         // Получение всех пользователей
-         function GetUsers1() {
-             $.ajax({
-                 url: "/Routen_Trol",
-                 type: "GET",
-                 contentType: "application/json",
-                 success: function (Routen_Trol) {
-                     var rows = "";
-                     
-                     $.each(Routen_Trol, function (index, user) {
-                         // добавляем полученные элементы в таблицу
-                         rows += row(user);
-                         
-                     })
-                     $("table").append(rows);
-                  }
- 
-                  
-             });
-             
-             var row = function (user) {
-             return "<tr data-rowid='" + user._id + "'><td>" + user._id + "</td>" +
-                 "<td>" + user.naimmarshrut+ "</td>  <td>" + user.perevozchik + "</td><td>" + user.putisled + "</td><td>" + user.title + "</td></tr>"
-                    
-         }
-         
-         }
-         GetUsers3();
-     </script>
-        
-        
     
+</p>
+</div>
+
+<div id="footer">
+Copyright © 2017 wm-school.ru
+</div>
+</div>
+
 </body>
 </html>
