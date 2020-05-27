@@ -6,6 +6,8 @@ const app = express();
 const redis = require("redis");
 const client = redis.createClient();
 
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','ejs');
 
@@ -19,6 +21,8 @@ console.log(" " + i + ": " + reply)
 })
 client.quit()
 })
+
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -54,16 +58,43 @@ mongoClient.connect(function(err, client){
     });
 });
 
+app.get("/", function(req, res){
+        
+  const collection = req.app.locals.collection;
+  collection.find({}).toArray(function(err, users){
+       
+      if(err) return console.log(err);
+      res.render('about', {name: users});
+      
+  });
+   
+});
+app.get("/:id", function(req, res){
+     
+  const id = new objectId(req.params.id);
+  const collection = req.app.locals.collection;
+  
+  collection.findOne({_id: id}, function(err, users){
+          
+        if(err) return console.log(err);
+        res.send(users);
+  });
+  console.log(users)
+});
+
+
 app.get("/Routen_Trol", function(req, res){
         
     const collection = req.app.locals.collection;
     collection.find({}).toArray(function(err, users){
          
         if(err) return console.log(err);
-        res.send(users)
+        res.render('about', {name: users});
+        
     });
      
 });
+
 app.get("/Routen_Avto", function(req, res){
         
     const collection = req.app.locals.collection2;
@@ -74,7 +105,7 @@ app.get("/Routen_Avto", function(req, res){
     });
      
 });
-app.get('/views/about.ejs',function(req,res){
+app.get('/about',function(req,res){
     session
         .run('match (e1:Route) return e1')
         .then(function(result){
@@ -91,6 +122,7 @@ app.get('/views/about.ejs',function(req,res){
                     tram: tramArr
                 
             });
+            console.log(tramArr);
         })
         .catch(function(err){
 console.log(err);
@@ -107,6 +139,60 @@ app.get("/Routen_Tram", function(req, res){
     });
      
 });
+
+// init influxdb
+const Influx = require('influx')
+const os = require('os')
+
+const influx = new Influx.InfluxDB({
+    host: 'localhost',
+    port: 8086,
+    database: 'express_response_db',
+    schema: [
+      {
+        measurement: 'response_times',
+        fields: {
+          path: Influx.FieldType.STRING,
+          duration: Influx.FieldType.INTEGER
+        },
+        tags: [
+          'host'
+        ]
+      }
+    ]
+})
+
+influx.getDatabaseNames()
+.then(names => {
+  if (!names.includes('express_response_db')) {
+    return influx.createDatabase('express_response_db');
+  }
+})
+.catch(err => {
+  console.error(`Error creating Influx database!`);
+})
+
+// logging response times with influx
+app.use((req, res, next) => {
+  const start = Date.now()
+
+  res.on('finish', () => {
+    const duration = Date.now() - start
+    console.log(`Request to ${req.originalUrl} took ${duration}ms`);
+
+    influx.writePoints([
+      {
+        measurement: 'response_times',
+        tags: { host: os.hostname() },
+        fields: { duration, path: req.originalUrl },
+      }
+    ]).catch(err => {
+      console.error(`Error saving data to InfluxDB! ${err.stack}`)
+    })
+  })
+
+  return next()
+})
 
 
 // прослушиваем прерывание работы программы (ctrl-c)

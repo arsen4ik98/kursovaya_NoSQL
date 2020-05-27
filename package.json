@@ -6,6 +6,8 @@
     "body-parser": "*",
     "ejs": "^2.4.2",
     "express": "^4.16.4",
+    "influx": "^5.5.1",
+    "influxdb": "0.0.1",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.14",
     "morgan": "*",

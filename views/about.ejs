@@ -1,7 +1,57 @@
-
-    <h1>О сайте123</h1>
-    <ul>
-    <% tram.forEach(function(tram){ %>
-        <li><%= tram.name %>,  <%= tram.name1 %>,  <%= tram.name2 %></li>
-    <%}) %>
-    </ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Список пользователей</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">    
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<div id="page">
+    <div id="header">
+    <h1><center>Маршруты общественного транспорта Краснодар</center></h1>
+    </div>
+    <center><div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'London')">London</button>
+        <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+        <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+      </div></center>
+      <div id="London" class="tabcontent">
+        <% for (var i = 0; i < name.length; i++) {%>
+            <h1><%=name[i].putisled%></h1>
+            <%}%>
+      </div>
+      
+      <div id="Paris" class="tabcontent">
+        <% for (var i = 0; i < name.length; i++) { var a1 = name[i]._id;%>
+           
+            <a class="tab" href=<%=a1%>> <%=name[i].title%>  </a> 
+            <%}%>
+      </div>
+      
+      <div id="Tokyo" class="tabcontent">
+        <% for (var i = 0; i < name.length; i++) {%>
+            <h1><%=name[i].title%></h1>
+            <%}%>
+      </div>
+<body>
+    
+     
+   
+    <script>
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        </script>
+</body>
+</html>
