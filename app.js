@@ -71,15 +71,13 @@ app.get("/", function(req, res){
 });
 app.get("/:id", function(req, res){
      
-  const id = new objectId(req.params.id);
   const collection = req.app.locals.collection;
-  
-  collection.findOne({_id: id}, function(err, users){
-          
-        if(err) return console.log(err);
-        res.send(users);
-  });
-  console.log(users)
+  collection.find({}).toArray(function(err, users){
+       
+      if(err) return console.log(err);
+      res.render('about', {name: users});
+      
+});
 });
 
 
